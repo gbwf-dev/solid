@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"gbfw/api/controllers"
 	"gbfw/api/env"
 	"gbfw/api/vite"
 	"io/fs"
@@ -30,7 +31,7 @@ func main() {
 	}
 
 	api := app.Group("/api")
-	api.Get("/health", func(c fiber.Ctx) error { return c.JSON(fiber.Map{"status": "ok"}) })
+	api.Get("/health", controllers.Health)
 	api.Use(func(c fiber.Ctx) error { return c.SendStatus(fiber.StatusNotFound) })
 
 	app.Use(static.New("", static.Config{FS: viteFS}))
