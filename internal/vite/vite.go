@@ -13,9 +13,6 @@ import (
 //go:embed build/*
 var productionFS embed.FS
 
-//go:embed dev/*
-var developmentFS embed.FS
-
 type JSRuntime string
 
 const (
@@ -33,7 +30,7 @@ func Load() (fs.FS, error) {
 		if err := cmd.Start(); err != nil {
 			log.Println(err)
 		}
-		return fs.Sub(developmentFS, "dev")
+		return os.DirFS("internal/vite/dev"), nil
 	}
 
 	return fs.Sub(productionFS, "build")
